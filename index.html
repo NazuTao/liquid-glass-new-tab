@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nueva Pestaña</title>
+    <title>LiquidTab</title>
     <link rel="icon" type="image/png" href="icons/icon16.png">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="lib/cropper.min.css">
     <link rel="stylesheet" href="style.css">
@@ -16,62 +15,139 @@
 
     <main class="glass-card" id="main-ui">
         <div class="greeting-area">
-            <span class="sub-text">Bienvenido,</span>
-            <h1 id="user-name" contenteditable="true" spellcheck="false">Usuario</h1>
+            <span class="sub-text" data-i18n="greeting">Welcome,</span>
+            <h1 id="user-name" contenteditable="true" spellcheck="false">User</h1>
         </div>
 
         <div class="search-box">
             <form action="https://www.google.com/search" method="GET">
                 <svg class="search-icon" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <input type="text" id="main-search-input" name="q" placeholder="Buscar en Google..." autocomplete="off" tabindex="1">
+                <input type="text" id="main-search-input" name="q" placeholder="Search Google..." autocomplete="off" data-i18n-placeholder="searchPlaceholder">
             </form>
         </div>
     </main>
 
+    <div id="bookmarks-widget" class="bookmarks-widget">
+        <div class="bookmarks-grid" id="bookmarks-grid"></div>
+    </div>
+
     <div class="controls-container">
-        <a href="https://github.com/NazuTao" target="_blank" class="glass-btn github-btn" title="Mi GitHub">
+        <a href="https://github.com/nazutao" target="_blank" id="github-btn" class="glass-btn github-btn" title="GitHub">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
         </a>
-
-        <button id="settings-toggle" class="glass-btn settings-btn" title="Configuración">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <button id="settings-toggle" class="glass-btn settings-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
     </div>
 
     <div id="settings-modal" class="modal-overlay hidden">
-        <div class="settings-panel glass-card-static">
+        <div class="settings-panel glass-card-static command-center">
             <div class="settings-header">
-                <h2>Ajustes</h2>
-                <button id="close-settings" class="close-btn">&times;</button>
+                <h2 data-i18n="settingsTitle">Command Center</h2>
+                <button id="close-settings" class="close-btn">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
             </div>
-            <div class="settings-body">
+            <div class="settings-body scrollable">
                 <div class="setting-item">
-                    <label>Color del Tema</label>
-                    <div class="color-wrapper">
-                        <input type="color" id="color-picker" value="#ffffff">
-                    </div>
+                    <label data-i18n="labelLanguage">Language</label>
+                    <label class="lang-switch">
+                        <input type="checkbox" id="lang-toggle">
+                        <span class="lang-slider">
+                            <span class="flag us">🇺🇸</span>
+                            <span class="flag mx">🇲🇽</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="group-title" data-i18n="groupVisual">Text & Color</div>
+                <div class="setting-item">
+                    <label data-i18n="labelTextEffect">RGB Effect</label>
+                    <select id="text-effect-select" class="modal-select">
+                        <option value="solid">Solid</option>
+                        <option value="neon">Neon Glow</option>
+                        <option value="breathe">Breathing</option>
+                        <option value="glitch">Glitch</option>
+                        <option value="reflect">Reflect</option>
+                        <option value="rainbow">Rainbow</option>
+                    </select>
+                </div>
+                <div class="setting-item" id="color-picker-container">
+                    <label data-i18n="labelColorBase">Base Color</label>
+                    <div class="color-wrapper"><input type="color" id="color-picker" value="#ffffff"></div>
+                </div>
+                <div class="group-title" data-i18n="groupGlass">Glass Panel</div>
+                <div class="setting-item">
+                    <label data-i18n="labelGlassColor">Glass Color</label>
+                    <div class="color-wrapper"><input type="color" id="card-color-picker" value="#ffffff"></div>
+                </div>
+                <div class="setting-item vertical">
+                    <label data-i18n="labelOpacity">Opacity</label>
+                    <input type="range" id="card-opacity" min="0" max="100" value="20" class="range-slider">
+                </div>
+                <div class="group-title" data-i18n="groupElements">Elements</div>
+                <div class="setting-item">
+                    <label data-i18n="labelGithub">GitHub Button</label>
+                    <label class="switch"><input type="checkbox" id="toggle-github" checked><span class="slider"></span></label>
                 </div>
                 <div class="setting-item">
-                    <label>Fondo de Pantalla</label>
-                    <label for="file-input" class="btn secondary full-width">Subir Imagen</label>
+                    <label data-i18n="labelBookmarks">Bookmarks Widget</label>
+                    <label class="switch"><input type="checkbox" id="toggle-bookmarks" checked><span class="slider"></span></label>
+                </div>
+                <div class="setting-item">
+                    <label data-i18n="labelGlow">Panel Glow</label>
+                    <label class="switch"><input type="checkbox" id="toggle-breathe" checked><span class="slider"></span></label>
+                </div>
+                <div class="group-title" data-i18n="groupBackground">Background</div>
+                <div class="setting-item vertical">
+                    <label data-i18n="labelDimmer">Dimmer</label>
+                    <input type="range" id="bg-dimmer" min="0" max="100" value="60" class="range-slider">
+                </div>
+                <div class="setting-item">
+                    <label data-i18n="labelWallpaper">Wallpaper</label>
+                    <label for="file-input" class="btn secondary" data-i18n="btnUpload">Upload</label>
                     <input type="file" id="file-input" accept="image/*" hidden>
                 </div>
+                <div class="group-title" data-i18n="groupSystem">System</div>
                 <div class="setting-item">
-                    <button id="reset-default" class="link-btn">Restaurar fondo original</button>
+                    <label data-i18n="labelEditMode">Edit Mode</label>
+                    <button id="btn-edit-mode" class="btn primary" data-i18n="btnEnter">Enter</button>
+                </div>
+                <div class="setting-item">
+                    <button id="reset-config" class="link-btn text-red" data-i18n="btnReset">Reset All</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="edit-overlay" class="edit-overlay hidden">
+        <div class="edit-controls">
+            <div class="edit-info">
+                <span data-i18n="editModeTitle">EDIT MODE</span>
+                <small data-i18n="editModeSubtitle">Drag to move • Wheel to scale</small>
+            </div>
+            <button id="save-layout" class="btn primary" data-i18n="btnSave">Save</button>
         </div>
     </div>
 
     <div id="crop-modal" class="modal-overlay hidden" style="z-index: 200;">
         <div class="modal-content glass-card-static">
-            <h2>Ajustar Imagen</h2>
-            <div class="crop-container">
-                <img id="image-to-crop" src="" alt="Vista previa">
-            </div>
+            <h2 data-i18n="labelWallpaper">Adjust Wallpaper</h2>
+            <div class="crop-container"><img id="image-to-crop" src=""></div>
             <div class="modal-buttons">
-                <button id="btn-cancel" class="btn secondary">Cancelar</button>
-                <button id="btn-save" class="btn primary">Guardar y Aplicar</button>
+                <button id="btn-cancel" class="btn secondary" data-i18n="btnCancel">Cancel</button>
+                <button id="btn-save" class="btn primary" data-i18n="btnSaveBookmark">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="bookmark-modal" class="modal-overlay hidden">
+        <div class="glass-card-static">
+            <h3 data-i18n="modalBookmarkTitle">New Bookmark</h3>
+            <input type="text" id="bm-title" placeholder="Name" class="modal-input">
+            <input type="text" id="bm-url" placeholder="URL" class="modal-input">
+            <div class="modal-buttons">
+                <button id="bm-cancel" class="btn secondary" data-i18n="btnCancel">Cancel</button>
+                <button id="bm-save" class="btn primary" data-i18n="btnSaveBookmark">Save</button>
             </div>
         </div>
     </div>
